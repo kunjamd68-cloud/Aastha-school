@@ -2127,7 +2127,7 @@ document.addEventListener("click",(e)=>{
 LIVE NEWS SECTION (FINAL)
 ========================= */
 
-const NEWS_API_KEY = "38c1602f10a76bc739a3a481e4b0a5db";
+const NEWS_API_KEY = "b1b0f62105eb3c0a0217cb9de4f1faa2";
 
 /* 🔹 Fetch News */
 async function fetchNews(query, elementId) {
@@ -2144,6 +2144,13 @@ const url =
   `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=3&apikey=${NEWS_API_KEY}`;
 
 const response = await fetch(url);
+
+if (response.status === 429) {
+  container.innerHTML =
+    "<p>API limit reached. Please try again later.</p>";
+  return;
+}
+
 const data = await response.json();
 
 console.log(query, data);
@@ -2166,15 +2173,11 @@ if (!data.articles || data.articles.length === 0) {
 container.innerHTML = data.articles.map(article => `
   <div class="news-item" style="margin-bottom:15px;">
 
-    <strong>
-      ${article.title}
-    </strong>
+    <strong>${article.title}</strong>
 
     <br>
 
-    <small>
-      ${article.source?.name || ""}
-    </small>
+    <small>${article.source?.name || ""}</small>
 
     <br>
 
@@ -2196,21 +2199,27 @@ container.innerHTML = data.articles.map(article => `
 console.error(error);
 
 container.innerHTML =
-  `<p>Failed to load news</p>`;
+  "<p>Failed to load news</p>";
 
 }
 }
 
-/* 🔥 Load Categories */
-function loadAllNews() {
+/* 🔥 Load Categories with Delay */
+async function loadAllNews() {
 
-fetchNews("India", "nationalNews");
+await fetchNews("India", "nationalNews");
 
-fetchNews("World", "internationalNews");
+await new Promise(resolve => setTimeout(resolve, 5000));
 
-fetchNews("Chhattisgarh", "cgNews");
+await fetchNews("World", "internationalNews");
 
-fetchNews("Sports", "sportsNews");
+await new Promise(resolve => setTimeout(resolve, 5000));
+
+await fetchNews("Chhattisgarh", "cgNews");
+
+await new Promise(resolve => setTimeout(resolve, 5000));
+
+await fetchNews("Sports", "sportsNews");
 }
 
 /* 🚀 First Load */
