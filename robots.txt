@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aasthavidyamandirenglishmediumschool.netlify.app/sitemap.xml

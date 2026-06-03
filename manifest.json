@@ -1,0 +1,17 @@
+{
+"name": "Aastha Vidya Mandir English Medium School",
+"short_name": "AVM School",
+"description": "Official website of Aastha Vidya Mandir English Medium School",
+"start_url": "/",
+"display": "standalone",
+"background_color": "#ffffff",
+"theme_color": "#0B1F3A",
+"orientation": "portrait",
+"icons": [
+{
+"src": "images/logo.png",
+"sizes": "512x512",
+"type": "image/png"
+}
+]
+}
